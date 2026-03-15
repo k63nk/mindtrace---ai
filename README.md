@@ -20,3 +20,4 @@ View your app in AI Studio: https://ai.studio/apps/eecd4f6e-ddc6-4a7b-a15b-e2691
    `npm run dev`
 "# mindtrace---ai" 
 "# mindtraceweb" 
+"# mindtraceweb" 
