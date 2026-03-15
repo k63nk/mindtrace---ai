@@ -78,6 +78,13 @@ const App: React.FC = () => {
     }
   }, []);
 
+  // Auto-save currentUser to localStorage whenever it changes
+  useEffect(() => {
+    if (currentUser) {
+      backend.updateCurrentUserSession(currentUser);
+    }
+  }, [currentUser]);
+
   useEffect(() => {
     if (currentUser && view === 'home') {
       setView(currentUser.role === 'student' ? 'sv_dashboard' : 'business_dashboard');

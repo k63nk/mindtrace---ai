@@ -36,7 +36,7 @@ class BackendService {
       const current = this.getCurrentUser();
       if (current && current.email.toLowerCase() === 'gungmeme06@gmail.com') {
         current.name = 'Nguyễn Khánh Huyền';
-        this.setStorage(STORAGE_KEYS.CURRENT_USER, current);
+        this.updateCurrentUserSession(current);
       }
     }
 
@@ -66,7 +66,7 @@ class BackendService {
         const current = this.getCurrentUser();
         if (current && current.email.toLowerCase() === 'technova@gmail.com') {
           current.postsRemaining = 2;
-          this.setStorage(STORAGE_KEYS.CURRENT_USER, current);
+          this.updateCurrentUserSession(current);
         }
       }
     }
@@ -369,7 +369,7 @@ class BackendService {
       return null;
     }
 
-    this.setStorage(STORAGE_KEYS.CURRENT_USER, user);
+    this.updateCurrentUserSession(user);
     return user;
   }
 
@@ -386,7 +386,7 @@ class BackendService {
       users[idx] = existing;
       this.setStorage(STORAGE_KEYS.USERS, users);
       // Auto-login the user
-      this.setStorage(STORAGE_KEYS.CURRENT_USER, existing);
+      this.updateCurrentUserSession(existing);
       return existing;
     }
 
@@ -407,7 +407,7 @@ class BackendService {
     users.push(newUser);
     this.setStorage(STORAGE_KEYS.USERS, users);
     // Auto-login the user after successful registration
-    this.setStorage(STORAGE_KEYS.CURRENT_USER, newUser);
+    this.updateCurrentUserSession(newUser);
     return newUser;
   }
 
@@ -423,7 +423,7 @@ class BackendService {
       // Update current session if it's the same user
       const currentUser = this.getCurrentUser();
       if (currentUser && currentUser.id === userId) {
-        this.setStorage(STORAGE_KEYS.CURRENT_USER, users[index]);
+        this.updateCurrentUserSession(users[index]);
       }
     }
   }
@@ -455,7 +455,7 @@ class BackendService {
     // Update current session if it's the same user
     const current = this.getCurrentUser();
     if (current && current.id === userId) {
-      this.setStorage(STORAGE_KEYS.CURRENT_USER, updatedUser);
+      this.updateCurrentUserSession(updatedUser);
     }
     
     return updatedUser;
@@ -463,6 +463,11 @@ class BackendService {
 
   getCurrentUser(): User | null {
     return this.getStorage<User | null>(STORAGE_KEYS.CURRENT_USER, null);
+  }
+
+  // Update the current user session in localStorage whenever user data changes
+  updateCurrentUserSession(user: User): void {
+    this.setStorage(STORAGE_KEYS.CURRENT_USER, user);
   }
 
   getJobs(): Job[] {
@@ -865,7 +870,7 @@ class BackendService {
       
       const current = this.getCurrentUser();
       if (current && current.id === userId) {
-        this.setStorage(STORAGE_KEYS.CURRENT_USER, users[index]);
+        this.updateCurrentUserSession(users[index]);
       }
     }
   }
@@ -880,7 +885,7 @@ class BackendService {
       
       const current = this.getCurrentUser();
       if (current && current.id === userId) {
-        this.setStorage(STORAGE_KEYS.CURRENT_USER, users[index]);
+        this.updateCurrentUserSession(users[index]);
       }
     }
   }
@@ -898,7 +903,7 @@ class BackendService {
       
       const current = this.getCurrentUser();
       if (current && current.id === userId) {
-        this.setStorage(STORAGE_KEYS.CURRENT_USER, users[index]);
+        this.updateCurrentUserSession(users[index]);
       }
       
       this.addNotification(
