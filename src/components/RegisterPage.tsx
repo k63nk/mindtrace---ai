@@ -23,7 +23,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onBack, onNavigateToLogin, 
       return;
     }
     
-    // Save to backend
+    // Save to backend and auto-login
     backend.register({
       email: email.toLowerCase(),
       name: fullName,
@@ -32,6 +32,10 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onBack, onNavigateToLogin, 
     });
 
     setIsSuccess(true);
+    // Auto-navigate to dashboard after brief delay
+    setTimeout(() => {
+      onRegisterSuccess(role, email.toLowerCase());
+    }, 1500);
   };
 
   if (isSuccess) {
@@ -47,14 +51,13 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onBack, onNavigateToLogin, 
           <h1 className="text-3xl font-bold text-white mb-4">Đăng ký thành công!</h1>
           <p className="text-slate-400 mb-10 leading-relaxed">
             Chào mừng <span className="text-white font-bold">{fullName}</span> gia nhập MindTrace. <br/>
-            Tài khoản của bạn đã sẵn sàng để sử dụng.
+            Tài khoản của bạn đã sẵn sàng để sử dụng. Đang chuyển hướng...
           </p>
-          <button 
-            onClick={onNavigateToLogin}
-            className="w-full py-4 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-2xl hover:opacity-90 transition-all shadow-xl shadow-primary/20"
-          >
-            Di chuyển đến trang đăng nhập
-          </button>
+          <div className="flex justify-center items-center gap-2">
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+            <div className="w-2 h-2 bg-secondary rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+          </div>
         </div>
       </div>
     );

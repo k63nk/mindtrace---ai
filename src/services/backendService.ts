@@ -385,6 +385,8 @@ class BackendService {
       const idx = users.findIndex(u => u.id === existing.id);
       users[idx] = existing;
       this.setStorage(STORAGE_KEYS.USERS, users);
+      // Auto-login the user
+      this.setStorage(STORAGE_KEYS.CURRENT_USER, existing);
       return existing;
     }
 
@@ -404,6 +406,8 @@ class BackendService {
 
     users.push(newUser);
     this.setStorage(STORAGE_KEYS.USERS, users);
+    // Auto-login the user after successful registration
+    this.setStorage(STORAGE_KEYS.CURRENT_USER, newUser);
     return newUser;
   }
 

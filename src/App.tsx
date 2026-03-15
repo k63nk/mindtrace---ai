@@ -70,10 +70,10 @@ const App: React.FC = () => {
     initDb();
   }, []);
 
-  // Restore user session from localStorage on page load
+  // Restore user session from localStorage on page load and keep it in sync
   useEffect(() => {
     const savedUser = backend.getCurrentUser();
-    if (savedUser && !currentUser) {
+    if (savedUser) {
       setCurrentUser(savedUser);
     }
   }, []);
